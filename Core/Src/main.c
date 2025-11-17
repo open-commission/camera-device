@@ -40,7 +40,6 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define RX_BUFFER_SIZE 256
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -51,7 +50,6 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint8_t rx_buffer[RX_BUFFER_SIZE]; // UART2接收缓冲区
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -99,11 +97,11 @@ int main(void) {
   MX_TIM3_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-  // 初始化UART2 DMA接收
-  UART2_ReceiveData_DMA(rx_buffer, RX_BUFFER_SIZE);
-  
+
   // 发送提示信息
   UART2_TransmitString_DMA("UART2 Echo Server Started...\r\n");
+
+  INIT_UART2();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -112,22 +110,11 @@ int main(void) {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    // 检查是否接收到数据
-    if (UART2_IsRxComplete()) {
-      uint16_t size = UART2_GetRxSize();
-      uint8_t* buffer = UART2_GetRxBuffer();
-      
-      // 原样返回接收到的数据
-      if (size > 0) {
-        HAL_UART_Transmit_DMA(&huart2, buffer, size);
-      }
-      
-      // 重新启动接收
-      UART2_ReceiveData_DMA(rx_buffer, RX_BUFFER_SIZE);
-    }
-    
+    // 在纯中断模式下，此处可以为空或者执行其他任务
+    // 数据接收和处理都在中断回调函数中完成
+
     // 添加小延迟以减少CPU占用
-    HAL_Delay(1);
+    HAL_Delay(10);
   }
   /* USER CODE END 3 */
 }
