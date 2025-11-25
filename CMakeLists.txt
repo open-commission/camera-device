@@ -36,6 +36,7 @@ add_executable(${CMAKE_PROJECT_NAME}
         Core/Src/ttp229.c
         Core/Src/DebugUart/uart2.c
         Core/Src/CJSON/cJSON.c
+        Core/Src/HX711/hx711.c
 )
 
 # Add STM32CubeMX generated sources
@@ -51,6 +52,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user sources here
     Core/Src/DebugUart/uart2.c
     Core/Src/CJSON/cJSON.c
+    Core/Src/HX711/hx711.c
 )
 
 # Add include paths
@@ -58,6 +60,7 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined include paths
     Core/Src/DebugUart
     Core/Src/CJSON
+    Core/Src/HX711
 )
 
 # Add project symbols (macros)

@@ -57,6 +57,12 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define WATER_Pin GPIO_PIN_13
+#define WATER_GPIO_Port GPIOB
+#define HX_DO_Pin GPIO_PIN_14
+#define HX_DO_GPIO_Port GPIOB
+#define HX_CLK_Pin GPIO_PIN_15
+#define HX_CLK_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 
