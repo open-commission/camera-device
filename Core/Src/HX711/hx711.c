@@ -2,11 +2,15 @@
 
 *************************************************************************************/
 #include "hx711.h"
+#include "delay.h"
+#include "main.h"
+#include "stm32f1xx_hal_gpio.h"
+#include <stdint.h>
 
-u32 HX711_Buffer;
-u32 Weight_Maopi;
-s32 Weight_Shiwu;
-u8 Flag_Error = 0;
+uint32_t HX711_Buffer;
+uint32_t Weight_Maopi;
+int32_t Weight_Shiwu;
+uint8_t Flag_Error = 0;
 
 float P = 1;
 float P_; // 对应公式中的p'
@@ -37,29 +41,29 @@ float KLM(float Z) {
 //****************************************************
 // 读取HX711
 //****************************************************
-u32 HX711_Read(void) // 增益128
+uint32_t HX711_Read(void) // 增益128
 {
   unsigned long count;
   unsigned char i;
-  HX711_DOUT = 1;
+  HAL_GPIO_WritePin(HX_DO_GPIO_Port, HX_DO_Pin, GPIO_PIN_SET);
   delay_us(1);
-  HX711_SCK = 0;
+  HAL_GPIO_WritePin(HX_CLK_GPIO_Port, HX_CLK_Pin, GPIO_PIN_RESET);
   count = 0;
-  while (HX711_DOUT)
+  while (HAL_GPIO_ReadPin(HX_DO_GPIO_Port, HX_DO_Pin) == GPIO_PIN_SET)
     ;
   for (i = 0; i < 24; i++) {
-    HX711_SCK = 1;
+    HAL_GPIO_WritePin(HX_CLK_GPIO_Port, HX_CLK_Pin, GPIO_PIN_SET);
     count = count << 1;
     delay_us(1);
-    HX711_SCK = 0;
-    if (HX711_DOUT)
+    HAL_GPIO_WritePin(HX_CLK_GPIO_Port, HX_CLK_Pin, GPIO_PIN_RESET);
+    if (HAL_GPIO_ReadPin(HX_DO_GPIO_Port, HX_DO_Pin) == GPIO_PIN_SET)
       count++;
     delay_us(1);
   }
-  HX711_SCK = 1;
+  HAL_GPIO_WritePin(HX_CLK_GPIO_Port, HX_CLK_Pin, GPIO_PIN_SET);
   count = count ^ 0x800000; // 第25个脉冲下降沿来时，转换数据
   delay_us(1);
-  HX711_SCK = 0;
+  HAL_GPIO_WritePin(HX_CLK_GPIO_Port, HX_CLK_Pin, GPIO_PIN_RESET);
   return (count);
 }
 
@@ -78,7 +82,7 @@ void Get_Weight(void) {
     Weight_Shiwu = Weight_Shiwu - Weight_Maopi; // 获取实物的AD采样数值。
 
     Weight_Shiwu =
-        (s32)((float)Weight_Shiwu / GapValue) -
+        (int32_t)((float)Weight_Shiwu / GapValue) -
         478; // 计算实物的实际重量
              // 因为不同的传感器特性曲线不一样，因此，每一个传感器需要矫正这里的GapValue这个除数。
              // 当发现测试出来的重量偏大时，增加该数值。
