@@ -38,6 +38,8 @@ add_executable(${CMAKE_PROJECT_NAME}
         Core/Src/CJSON/cJSON.c
         Core/Src/HX711/hx711.c
         Core/Src/Delay/delay.c
+        Core/Src/Sen/0121.c
+        Core/Src/Dht11/11.c
 )
 
 # Add STM32CubeMX generated sources
@@ -55,6 +57,8 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     Core/Src/CJSON/cJSON.c
     Core/Src/HX711/hx711.c
     Core/Src/Delay/delay.c
+    Core/Src/Sen/0121.c
+    Core/Src/Dht11/11.c
 )
 
 # Add include paths
@@ -64,6 +68,8 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     Core/Src/CJSON
     Core/Src/HX711
     Core/Src/Delay
+    Core/Src/Sen
+    Core/Src/Dht11
 )
 
 # Add project symbols (macros)

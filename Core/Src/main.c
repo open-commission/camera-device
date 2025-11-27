@@ -18,18 +18,21 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "adc.h"
 #include "dma.h"
 #include "gpio.h"
-#include "stm32f1xx_hal.h"
-#include "stm32f1xx_hal_gpio.h"
 #include "usart.h"
+
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "DebugUart/uart2.h"
 #include "Delay/delay.h"
+#include "Dht11/11.h"
 #include "HX711/hx711.h"
+#include "Sen/0121.h"
 #include "math.h"
+#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -97,6 +100,7 @@ int main(void) {
   MX_DMA_Init();
   MX_USART1_UART_Init();
   MX_USART2_UART_Init();
+  MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
 
   // 发送提示信息
@@ -104,12 +108,15 @@ int main(void) {
 
   INIT_UART2();
 
-  Get_Maopi();
+  // Get_Maopi();
 
-  delay_ms(1000);
-  delay_ms(1000);
+  // delay_ms(1000);
+  // delay_ms(1000);
 
-  Get_Maopi();
+  // Get_Maopi();
+
+  extern uint8_t Data[5];
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -121,11 +128,26 @@ int main(void) {
     // 在纯中断模式下，此处可以为空或者执行其他任务
     // 数据接收和处理都在中断回调函数中完成
     // 添加小延迟以减少CPU占用
-    Get_Weight();
+    // Get_Weight();
 
-    char weight_str[32];
-    sprintf(weight_str, "%ld\r\n", Weight_Shiwu);
+    // char weight_str[32];
+    // sprintf(weight_str, "%d\r\n", Weight_Shiwu);
     // UART2_TransmitString_DMA(weight_str);
+
+    // uint16_t senValue = Read_SEN_ADC_Channel(ADC_CHANNEL_4);
+    // char sen_str[32];
+    // sprintf(sen_str, "%d\r\n", senValue);
+    // UART2_TransmitString_DMA(sen_str);
+
+    // if (DHT_Read()) {
+    // uint8_t *DHTValue1 = (uint8_t *)Data + 0;
+    // uint8_t *DHTValue2 = (uint8_t *)Data + 2;
+    // char dht_str[32];
+    // sprintf(dht_str, "%d\r\n%d\r\n\r\n", *DHTValue1, *DHTValue2);
+    // UART2_TransmitString_DMA(dht_str);
+    // }
+
+    delay_ms(1000);
 
     // HAL_GPIO_WritePin(HX_CLK_GPIO_Port, HX_CLK_Pin, GPIO_PIN_SET);
     // delay_us(20);
@@ -142,6 +164,7 @@ int main(void) {
 void SystemClock_Config(void) {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
 
   /** Initializes the RCC Oscillators according to the specified parameters
    * in the RCC_OscInitTypeDef structure.
@@ -167,6 +190,11 @@ void SystemClock_Config(void) {
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK) {
+    Error_Handler();
+  }
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADC;
+  PeriphClkInit.AdcClockSelection = RCC_ADCPCLK2_DIV6;
+  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK) {
     Error_Handler();
   }
 }
