@@ -63,14 +63,14 @@ void Error_Handler(void);
 #define HOT_GPIO_Port GPIOC
 #define SG_Pin GPIO_PIN_15
 #define SG_GPIO_Port GPIOC
+#define SG90_Pin GPIO_PIN_0
+#define SG90_GPIO_Port GPIOA
 #define DEBUG_TX_Pin GPIO_PIN_2
 #define DEBUG_TX_GPIO_Port GPIOA
 #define DEBUG_RX_Pin GPIO_PIN_3
 #define DEBUG_RX_GPIO_Port GPIOA
 #define SEN_Pin GPIO_PIN_4
 #define SEN_GPIO_Port GPIOA
-#define RFID_RX_Pin GPIO_PIN_11
-#define RFID_RX_GPIO_Port GPIOB
 #define HX_DO_Pin GPIO_PIN_14
 #define HX_DO_GPIO_Port GPIOB
 #define HX_CLK_Pin GPIO_PIN_15

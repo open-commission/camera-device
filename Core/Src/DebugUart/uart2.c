@@ -60,17 +60,17 @@ void INIT_UART2(void) {
   __HAL_DMA_DISABLE_IT(huart2.hdmarx, DMA_IT_HT);
 }
 
-// 不定长数据接收完成回调函数
-void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
-  if (huart->Instance == USART2) {
-    // 使用DMA将接收到的数据发送回去
-    HAL_UART_Transmit_DMA(&huart2, rx_data, Size);
-    // 重新启动接收，使用Ex函数，接收不定长数据
-    HAL_UARTEx_ReceiveToIdle_DMA(&huart2, rx_data, sizeof(rx_data));
-    // 关闭DMA传输过半中断（HAL库默认开启，但我们只需要接收完成中断）
-    __HAL_DMA_DISABLE_IT(huart2.hdmarx, DMA_IT_HT);
-  }
-}
+// // 不定长数据接收完成回调函数
+// void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
+//   if (huart->Instance == USART2) {
+//     // 使用DMA将接收到的数据发送回去
+//     HAL_UART_Transmit_DMA(&huart2, rx_data, Size);
+//     // 重新启动接收，使用Ex函数，接收不定长数据
+//     HAL_UARTEx_ReceiveToIdle_DMA(&huart2, rx_data, sizeof(rx_data));
+//     // 关闭DMA传输过半中断（HAL库默认开启，但我们只需要接收完成中断）
+//     __HAL_DMA_DISABLE_IT(huart2.hdmarx, DMA_IT_HT);
+//   }
+// }
 
 /* USER CODE BEGIN 1 */
 

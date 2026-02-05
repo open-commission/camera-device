@@ -9,13 +9,11 @@
 #include "tim.h"
 #include "uart1.h"
 #include "uart2.h"
-#include "uart3.h"
 
 void init_mcu()
 {
     INIT_UART1();
     INIT_UART2();
-    INIT_UART3();
 
     Get_Maopi();
     delay_ms(1000);

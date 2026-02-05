@@ -4,7 +4,6 @@
 
 #include "90.h"
 
-#include "stm32f1xx_hal_tim.h"
 #include "tim.h"
 
 void DuoJi_Angle_TIM2(int angle, int time)

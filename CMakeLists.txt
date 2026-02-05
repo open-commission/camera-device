@@ -36,7 +36,6 @@ add_executable(${CMAKE_PROJECT_NAME}
         Core/Src/ttp229.c
         Core/Src/DebugUart/uart2.c
         Core/Src/NetUart/uart1.c
-        Core/Src/RFIDUart/uart3.c
         Core/Src/CJSON/cJSON.c
         Core/Src/HX711/hx711.c
         Core/Src/Delay/delay.c
@@ -61,7 +60,6 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
         # Add user sources here
         Core/Src/DebugUart/uart2.c
         Core/Src/NetUart/uart1.c
-        Core/Src/RFIDUart/uart3.c
         Core/Src/CJSON/cJSON.c
         Core/Src/HX711/hx711.c
         Core/Src/Delay/delay.c
@@ -78,7 +76,6 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
         # Add user defined include paths
         Core/Src/DebugUart
         Core/Src/NetUart
-        Core/Src/RFIDUart
         Core/Src/CJSON
         Core/Src/HX711
         Core/Src/Delay

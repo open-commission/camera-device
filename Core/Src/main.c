@@ -39,7 +39,6 @@
 #include "90.h"
 #include "start.h"
 #include "uart1.h"
-#include "uart3.h"
 
 /* USER CODE END Includes */
 
@@ -106,7 +105,6 @@ int main(void)
   MX_USART1_UART_Init();
   MX_USART2_UART_Init();
   MX_ADC1_Init();
-  MX_USART3_UART_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
 
@@ -129,7 +127,7 @@ int main(void)
         Get_Weight();
 
         char weight_str[32];
-        sprintf(weight_str, "%d\r\n", Weight_Shiwu);
+        sprintf(weight_str, "%ld\r\n", Weight_Shiwu);
         UART2_TransmitString_DMA(weight_str);
 
         uint16_t senValue = Read_SEN_ADC_Channel(ADC_CHANNEL_4);
