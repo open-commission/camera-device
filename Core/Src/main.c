@@ -124,16 +124,16 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-        Get_Weight();
-
-        char weight_str[32];
-        sprintf(weight_str, "%ld\r\n", Weight_Shiwu);
-        UART2_TransmitString_DMA(weight_str);
-
-        uint16_t senValue = Read_SEN_ADC_Channel(ADC_CHANNEL_4);
-        char sen_str[32];
-        sprintf(sen_str, "%d\r\n", senValue);
-        UART2_TransmitString_DMA(sen_str);
+        // Get_Weight();
+        //
+        // char weight_str[32];
+        // sprintf(weight_str, "%ld\r\n", Weight_Shiwu);
+        // UART2_TransmitString_DMA(weight_str);
+        //
+        // uint16_t senValue = Read_SEN_ADC_Channel(ADC_CHANNEL_4);
+        // char sen_str[32];
+        // sprintf(sen_str, "%d\r\n", senValue);
+        // UART2_TransmitString_DMA(sen_str);
 
         if (DHT_Read())
         {
@@ -145,18 +145,18 @@ int main(void)
         }
 
         delay_ms(1000);
-
-        HAL_GPIO_WritePin(HX_CLK_GPIO_Port, HX_CLK_Pin, GPIO_PIN_SET);
-        delay_us(20);
-        HAL_GPIO_WritePin(HX_CLK_GPIO_Port, HX_CLK_Pin, GPIO_PIN_RESET);
-        delay_us(20);
-
-
-      DuoJi_Angle_TIM2(0 , 1000);
-      DuoJi_Angle_TIM2(45 , 1000);
-      DuoJi_Angle_TIM2(90 , 1000);
-      DuoJi_Angle_TIM2(135 , 1000);
-      DuoJi_Angle_TIM2(180, 1000);
+      //
+      //   HAL_GPIO_WritePin(HX_CLK_GPIO_Port, HX_CLK_Pin, GPIO_PIN_SET);
+      //   delay_us(20);
+      //   HAL_GPIO_WritePin(HX_CLK_GPIO_Port, HX_CLK_Pin, GPIO_PIN_RESET);
+      //   delay_us(20);
+      //
+      //
+      // DuoJi_Angle_TIM2(0 , 1000);
+      // DuoJi_Angle_TIM2(45 , 1000);
+      // DuoJi_Angle_TIM2(90 , 1000);
+      // DuoJi_Angle_TIM2(135 , 1000);
+      // DuoJi_Angle_TIM2(180, 1000);
     }
   /* USER CODE END 3 */
 }
