@@ -20,5 +20,4 @@ void init_mcu()
     delay_ms(1000);
     Get_Maopi();
 
-    HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_1);
 }
